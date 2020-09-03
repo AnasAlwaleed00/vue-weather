@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="typeof weather.main !='undefined' && weather.main.temp > 16 ? 'warm' : ''">
     <main>
       <div class="search-box">
         <input v-model="query" @keypress="fetchWeather" type="text" class="search-bar" placeholder="search....">
@@ -11,8 +11,14 @@
         </div>
   
         <div class="weather-box">
-          <div class="temp">{{ Math.round(weather.main.temp)}}&#176; </div>
-          <div class="weather">{{weather.weather[0].main}}</div>
+          <div class="temp">
+            <div class="min-max-temp">min:{{ Math.round(weather.main.temp_min)}}&#176; max:{{ Math.round(weather.main.temp_max)}}&#176;</div>
+            <div class="this-temp">{{ Math.round(weather.main.temp)}}&#176; </div>
+            </div>
+          <div class="weather">
+            {{weather.weather[0].main}}
+            <p>{{weather.weather[0].description}}</p>
+            </div>
         </div>
       </div>
     </main>
@@ -31,11 +37,13 @@ export default {
     }
   },
   methods: {
-    fetchWeather(){
+    fetchWeather(e){
       if(e.key == "Enter") {
         fetch(`${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`)
         .then(res => {
+          console.log(res)
           return res.json()
+          
         }).then(this.setResults)
       }
     },
@@ -51,7 +59,7 @@ export default {
       let date = d.getDate();
       let month = months[d.getMonth()];
       let year = d.getFullYear();
-      return `${day} ${date} ${month} ${year}`;
+      return `${day},  ${date} ${month} ${year}`;
     }
   }
 
@@ -72,6 +80,9 @@ body {
   background-size: cover;
   background-position: center;
   transition: .4s;
+}
+#app.warm {
+  background-image: url('./assets/warm-bg.jpg');
 }
 main {
   min-height: 100vh;
@@ -119,7 +130,7 @@ main {
 }
 .weather-box .temp {
   display: inline-block;
-  padding: 10px 25px;
+  padding: 10px 60px 40px 60px;
   color: #FFF;
   font-size: 102px;
   font-weight: 900;
@@ -129,11 +140,19 @@ main {
   margin: 30px 0px;
   box-shadow: 3px 6px rgba(0, 0, 0, 0.25);
 }
+.weather-box .temp .min-max-temp {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
 .weather-box .weather {
   color: #FFF;
   font-size: 48px;
   font-weight: 700;
   font-style: italic;
   text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
+}
+.weather p {
+  font-size: 14px;
 }
 </style>
