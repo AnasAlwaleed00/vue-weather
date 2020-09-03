@@ -82,7 +82,7 @@ body {
   transition: .4s;
 }
 #app.warm {
-  background-image: url('./assets/warm-bg.jpg');
+  background-image: url('../dist/warm-bg.jpg');
 }
 main {
   min-height: 100vh;
