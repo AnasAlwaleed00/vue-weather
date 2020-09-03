@@ -8,7 +8,7 @@ app.use('/', serveStatic(path.join(__dirname, '/dist')))
 // app.get('/', function (req, res) {
 //   res.send('Hello World')
 // })
- const port = process.env.PORT || 8080
+const port = process.env.PORT || 8080
 app.listen(port)
 
 console.log('listening on port:' + port)
