@@ -12,7 +12,7 @@
   
         <div class="weather-box">
           <div class="temp">
-            <div class="min-max-temp">min:{{ Math.round(weather.main.temp_min)}}&#176; max:{{ Math.round(weather.main.temp_max)}}&#176;</div>
+            <!-- <div class="min-max-temp">min:{{ Math.round(weather.main.temp_min)}}&#176; max:{{ Math.round(weather.main.temp_max)}}&#176;</div> -->
             <div class="this-temp">{{ Math.round(weather.main.temp)}}&#176; </div>
             </div>
           <div class="weather">
